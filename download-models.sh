@@ -5,9 +5,11 @@
 #!/bin/bash
 set -Eeuo pipefail
 
-# Download archive of models
-curl -LO https://github.com/mozilla/DeepSpeech/releases/download/v0.6.1/deepspeech-0.6.1-models.tar.gz 
+if [ ! -f deepspeech-0.6.1-models.tar.gz ]; then
+    echo "Downloading Models..." 
+    curl -LO https://github.com/mozilla/DeepSpeech/releases/download/v0.6.1/deepspeech-0.6.1-models.tar.gz 
+fi
 
-# Extract archive of models
-mkdir models
-tar xvf deepspeech-0.6.1-models.tar.gz -C models/
+echo "Extracting Models..."
+mkdir -p models
+tar xvf deepspeech-0.6.1-models.tar.gz -C models --strip-components 1
