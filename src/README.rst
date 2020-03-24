@@ -30,7 +30,7 @@ Usage
 
 .. code-block::
 
-   usage: mic_vad_streaming.py [-h] [-v VAD_AGGRESSIVENESS] [--nospinner]
+   usage: voice_control.py [-h] [-v VAD_AGGRESSIVENESS] [--nospinner]
                                [-w SAVEWAV] -m MODEL [-l LM]
                                [-t TRIE] [-nf N_FEATURES] [-nc N_CONTEXT]
                                [-la LM_ALPHA] [-lb LM_BETA]
