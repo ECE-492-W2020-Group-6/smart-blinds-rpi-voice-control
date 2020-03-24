@@ -7,4 +7,4 @@ source common.sh
 
 # Run image in daemon mode
 # Give contianer access to host's audio devices
-docker run -p 5000:5000 -it -d --name $CONTAINER_NAME --privileged --group-add=audio -v /dev/snd/:/dev/snd/ $RPI_IMAGE
+docker run -p 5000:5000 -it -d --name $CONTAINER_NAME --privileged --group-add=audio -v /dev/snd/:/dev/snd/ -v /models/:/src/models/ $RPI_IMAGE
