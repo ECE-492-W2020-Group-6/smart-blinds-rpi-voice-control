@@ -45,5 +45,10 @@ FROM build-image as runtime-image
 # Copy source code to container
 WORKDIR /src
 COPY . .
+
+# Add project to python path
+ENV PYTHONPATH="$PYTHONPATH:/src/"
+
+# Run voice control script
 EXPOSE 3000
 CMD ["python3", "src/voice_control.py"]
