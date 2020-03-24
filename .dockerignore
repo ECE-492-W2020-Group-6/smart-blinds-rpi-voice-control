@@ -1,0 +1,8 @@
+# Deepspeech models
+*models.tar.gz
+models/
+
+# Git
+.gitignore
+.git/
+.github/
