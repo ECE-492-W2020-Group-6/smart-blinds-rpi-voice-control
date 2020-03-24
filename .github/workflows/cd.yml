@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - master
-      - adapt-deepsearch-example
 
 jobs:
   cd:
