@@ -17,7 +17,8 @@ class VoiceParser():
     # Class variables
     TEXT2D = Text2Digits()
     DECIMAL_PATTERN = re.compile(r"(?:(\d+)\s*point\s*(\d+))")
-    NEGATIVE_PATTERN = re.compile(r"(?:(?:minus|negative)\s*(\d+(?:\.\d+)*))")
+    NEGATIVE_PATTERN = re.compile(r"(?:(?:minus|negative)\s*(\d+(?:\.\d+)?))")
+    PERCENT_PATTERN = re.compile(r"(?:(-?\d+(?:\.\d+)?) percent)")
     STEMMER = PorterStemmer()
 
     """ Class method that parses single line of text
@@ -44,12 +45,16 @@ class VoiceParser():
         # Ex. "move blinds to minus 57.113 percent" -> "move blinds to -57.113 percent"
         result = cls.NEGATIVE_PATTERN.sub(r"-\g<1>", result)
 
+        # Replace number percent with number%
+        # Ex. "move blinds to -57.113 percent" -> "move blinds to -57.113%"
+        result = cls.PERCENT_PATTERN.sub(r"\g<1>%", result)
+
         # Stem words
-        # Ex. "move blinds to -57.113 percent" -> "move blind to -57.113 percent"
+        # Ex. "move blinds to -57.113%" -> "move blind to -57.113%"
         result = " ".join(map(cls.STEMMER.stem, result.split()))
 
         # Remove stop words (ex. to, is, not)
-        # Ex. "move blind to -57.113 percent" -> "move blind -57.113 percent"
+        # Ex. "move blind to -57.113%" -> "move blind -57.113%"
         result = " ".join(filter(lambda w: w not in stopwords.words(), result.split()))
 
         return result
