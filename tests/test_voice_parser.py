@@ -35,6 +35,9 @@ from rpi_voice_control.voice_parser import VoiceParser
     ("move blinds to negative four point five eight percent", "move blind -4.58%"),
     ("move blinds to negative three three point seventy-seven percent", "move blind -33.77%"),
     ("move blinds to negative eleven point three five one percent", "move blind -11.351%"),
+    # Duration
+    ("move blinds to ten point eleven percent for 21 minutes", "move blind 10.11% 21m"),
+    ("move blinds to minus ninety-nine point three four eight percent for 4 hours", "move blind -99.348% 4h")
 ])
 def test_voice_parser(input_line, expected):
     result = VoiceParser.parse(input_line)
