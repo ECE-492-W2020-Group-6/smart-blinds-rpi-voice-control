@@ -7,6 +7,8 @@ Contents: Contains unit tests for voice parser
 import pytest
 from rpi_voice_control.voice_parser import VoiceParser
 
+""" Runs tests for voice parser
+"""
 @pytest.mark.parametrize("input_line,expected", [
     # Unchanged
     ("", ""),
@@ -34,6 +36,6 @@ from rpi_voice_control.voice_parser import VoiceParser
     ("move blinds to negative three three point seventy-seven percent", "move blind -33.77 percent"),
     ("move blinds to negative eleven point three five one percent", "move blind -11.351 percent"),
 ])
-def test_parse_voice(input_line, expected):
+def test_voice_parser(input_line, expected):
     result = VoiceParser.parse(input_line)
     assert result == expected

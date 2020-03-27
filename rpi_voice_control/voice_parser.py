@@ -11,6 +11,8 @@ from nltk.stem import PorterStemmer
 from nltk.corpus import stopwords
 download("stopwords")
 
+""" Class that parses raw voice command into usable text
+"""
 class VoiceParser():
     # Class variables
     TEXT2D = Text2Digits()
@@ -18,6 +20,14 @@ class VoiceParser():
     NEGATIVE_PATTERN = re.compile(r"(?:(?:minus|negative)\s*(\d+(?:\.\d+)*))")
     STEMMER = PorterStemmer()
 
+    """ Class method that parses single line of text
+
+    Arguments:
+        line {str} - line of voice command
+
+    Returns:
+        result {str} - parsed line
+    """
     @classmethod
     def parse(cls, line):
         # Replace substrings with number as word to digits
