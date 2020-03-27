@@ -1,11 +1,13 @@
 from text2digits.text2digits import Text2Digits
 import re
+from nltk.stem import PorterStemmer
 
 class VoiceParser():
     # Class variables
     TEXT2D = Text2Digits()
     DECIMAL_PATTERN = re.compile(r"(?:(\d+)\s*point\s*(\d+))")
     NEGATIVE_PATTERN = re.compile(r"(?:(?:minus|negative)\s*(\d+(?:\.\d+)*))")
+    STEMMER = PorterStemmer()
 
     @classmethod
     def parse(cls, line):
@@ -18,4 +20,6 @@ class VoiceParser():
         # Replace substrings with "minus"/"negative" preceding integer/decimal with -integer/decimal
         # Ex. "minus 13.159" -> "-13.159"
         result = cls.NEGATIVE_PATTERN.sub(r"-\g<1>", result)
+        # Stem words
+        result = " ".join(map(cls.STEMMER.stem, result.split()))
         return result
