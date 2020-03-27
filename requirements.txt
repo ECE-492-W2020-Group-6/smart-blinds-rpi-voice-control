@@ -1,6 +1,10 @@
-deepspeech==0.6.1
+deepspeech==0.6.1; platform_machine == 'armv7l' # tflite default on ARM
+deepspeech-tflite==0.6.1; platform_machine == 'x86_64' # Explicitly use tflite on x86_64
 pyaudio~=0.2.11
 webrtcvad~=2.0.10
 halo~=0.0.18
 numpy>=1.15.1
 scipy>=1.1.0
+pytest>=5.4.1
+text2digits>=0.0.9
+nltk>=3.4.5

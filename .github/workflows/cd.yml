@@ -21,10 +21,9 @@ jobs:
       id: docker-build
       run: ./docker-build.sh
       
-    # No unit test atm
-    # - name: Run Unit tests
-    #   id: run-unit-tests
-    #   run: ./run-tests.sh
+    - name: Run Unit tests
+      id: run-unit-tests
+      run: ./docker-run-tests.sh
     
     # Must be placed after docker build and unit tests since
     # this action seems to reset docker and remove the buildx plugin
