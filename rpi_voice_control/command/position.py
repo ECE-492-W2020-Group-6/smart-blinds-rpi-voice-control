@@ -48,8 +48,8 @@ class PositionCommand(Command):
         str - str serialization of ojbect
     """
     def __str__(self):
-        return "PositionCommand(mode={}, position={}, duration={})".format(
-            self._mode, self._position, self._duration)
+        return "PositionCommand(mode={}, position={}, duration={}, ip={}, port={})".format(
+            self._mode, self._position, self._duration, self._ip, self._port)
 
     """ Run command encoded in this object
     """
