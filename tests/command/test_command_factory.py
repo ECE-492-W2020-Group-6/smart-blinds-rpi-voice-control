@@ -7,6 +7,8 @@ import pytest
 from rpi_voice_control.command.command_factory import CommandFactory
 from rpi_voice_control.command.position import PositionCommand
 
+""" Tests for invalid input
+"""
 @pytest.mark.parametrize("input_text", [
     (""),
     ("las;lkfjkdsajflkjsalkfjalfkjf"),
@@ -15,6 +17,8 @@ def test_command_factory_invalid_input(input_text):
     command = CommandFactory.build(input_text)
     assert command is None
 
+""" Tests for valid input
+"""
 @pytest.mark.parametrize("input_text,expected", [
     ("move blind 15.15% 90m", PositionCommand(15.15, 90)),
     ("move blind -18.4531% 16h", PositionCommand(-18.4531, 16 * 60)),
