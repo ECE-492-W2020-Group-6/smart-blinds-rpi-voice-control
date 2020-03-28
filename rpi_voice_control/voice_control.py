@@ -14,6 +14,8 @@ import deepspeech
 import numpy as np
 from halo import Halo
 from rpi_voice_control.audio.audio import VADAudio
+from rpi_voice_control.voice_parser import VoiceParser
+from rpi_voice_control.command.command_factory import CommandFactory
 
 logging.basicConfig(level=20)
 
@@ -59,8 +61,14 @@ def main(ARGS):
             if ARGS.savewav:
                 vad_audio.write_wav(os.path.join(ARGS.savewav, datetime.now().strftime("savewav_%Y-%m-%d_%H-%M-%S_%f.wav")), wav_data)
                 wav_data = bytearray()
-            text = model.finishStream(stream_context)
-            print("Recognized: %s" % text)
+            text = model.finishStream(stream_context).strip()
+            parsed_text = VoiceParser.parse(text) 
+            command = CommandFactory.build(parsed_text)
+            print("-" * 80)
+            print(f"Recognized: {text}")
+            print(f"Parsed: {parsed_text}")
+            print(f"Command: {command}")
+            print("-" * 80)
             stream_context = model.createStream()
 
 if __name__ == '__main__':
