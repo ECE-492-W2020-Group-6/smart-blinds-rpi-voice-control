@@ -63,7 +63,7 @@ class PositionCommand(Command):
                 "duration": self._duration,
             })
         except Exception as e:
-            logging.exception("Encountered in PositionCommand.run()")
+            logging.exception("Unable to send position command to server")
 
     """ Builder method to build instance of class from parsed voice command (as text)
 
