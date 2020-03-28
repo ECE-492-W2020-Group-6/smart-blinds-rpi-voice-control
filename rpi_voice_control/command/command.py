@@ -13,15 +13,3 @@ class Command(metaclass=ABCMeta):
     @abstractclassmethod
     def build(cls, text):
         raise NotImplementedError 
-
-class CommandFactory():
-
-    @staticmethod
-    def build(text):
-        for subclass in Command.__subclasses__():
-            command = subclass.build(text) 
-            if command is not None:
-                return command
-
-        return None
-            

@@ -1,5 +1,5 @@
 import pytest
-from rpi_voice_control.command.command import CommandFactory
+from rpi_voice_control.command.command_factory import CommandFactory
 from rpi_voice_control.command.position import PositionCommand
 
 @pytest.mark.parametrize("input_text", [
