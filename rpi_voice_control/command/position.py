@@ -16,6 +16,10 @@ class PositionCommand(Command):
                 and self._duration == other._duration
         return False
 
+    def __str__(self):
+        return "PositionCommand(mode={}, position={}, duration={})".format(
+            self._mode, self._duration, self._position)
+
     def run(self):
         pass
 
