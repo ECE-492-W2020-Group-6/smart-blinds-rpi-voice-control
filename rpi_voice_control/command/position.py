@@ -18,7 +18,7 @@ class PositionCommand(Command):
 
     def __str__(self):
         return "PositionCommand(mode={}, position={}, duration={})".format(
-            self._mode, self._duration, self._position)
+            self._mode, self._position, self._duration)
 
     def run(self):
         pass
