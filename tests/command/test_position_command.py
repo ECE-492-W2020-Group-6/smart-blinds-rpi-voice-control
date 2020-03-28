@@ -1,3 +1,9 @@
+"""
+Date: Mar 27, 2020
+Author: Ishaat Chowdhury
+Contents: Contains tests for position command
+"""
+
 import pytest
 from rpi_voice_control.command.position import PositionCommand
 

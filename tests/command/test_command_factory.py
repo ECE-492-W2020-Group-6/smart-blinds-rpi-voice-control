@@ -1,3 +1,8 @@
+"""
+Date: Mar 27, 2020
+Author: Ishaat Chowdhury
+Contents: Contains tests for CommandFactory
+"""
 import pytest
 from rpi_voice_control.command.command_factory import CommandFactory
 from rpi_voice_control.command.position import PositionCommand
