@@ -8,3 +8,4 @@ scipy>=1.1.0
 pytest>=5.4.1
 text2digits>=0.0.9
 nltk>=3.4.5
+requests>=2.23.0

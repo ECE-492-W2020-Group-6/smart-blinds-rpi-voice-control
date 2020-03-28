@@ -5,6 +5,8 @@ Contents: Specific command to move to position manually
 """
 from rpi_voice_control.command.command import Command
 import re
+import requests
+import logging
 
 """ Class that encapsulates data and behaviour necessary to move
     blinds to specific position
@@ -17,11 +19,13 @@ class PositionCommand(Command):
     Arguments:
         position {float} - position to set blinds to
         duration {duration} - how long to set blinds to position for in minutes
+        port {int} - port of Smartblinds RPI server
     """
-    def __init__(self, position, duration):
+    def __init__(self, position, duration, port=5000):
         self._mode = 4 # Manual
         self._position = position
         self._duration = duration
+        self._port = port
 
     """ Check if two PositionCommand objects are equal
 
@@ -33,7 +37,8 @@ class PositionCommand(Command):
         if isinstance(other, PositionCommand):
             return self._mode == other._mode \
                 and self._position == other._position \
-                and self._duration == other._duration
+                and self._duration == other._duration \
+                and self._port == other._port
         return False
 
     """ Return string representation of object
@@ -51,7 +56,14 @@ class PositionCommand(Command):
     This makes an API call to the Smartblinds RPI Web Server over localhost
     """
     def run(self):
-        pass
+        try:
+            requests.post(f"http://localhost:{self._port}/api/v1/command", data={
+                "mode": self._mode,
+                "position": self._position,
+                "duration": self._duration,
+            })
+        except Exception as e:
+            logging.exception("Encountered in PositionCommand.run()")
 
     """ Builder method to build instance of class from parsed voice command (as text)
 

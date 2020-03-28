@@ -69,6 +69,8 @@ def main(ARGS):
             print(f"Parsed: {parsed_text}")
             print(f"Command: {command}")
             print("-" * 80)
+            if command is not None:
+                command.run()
             stream_context = model.createStream()
 
 if __name__ == '__main__':
