@@ -5,19 +5,15 @@ class PositionCommand(Command):
     PATTERN = re.compile(r"move blind (-?\d+(?:.\d+)?)% (\d+)(m|h)")
 
     def __init__(self, position, duration):
-        self._payload = {
-            "mode": 4, # Manual
-            "position": position,
-            "duration": duration,
-        }
-
-    @property
-    def payload(self):
-        return self._payload
+        self._mode = 4 # Manual
+        self._position = position
+        self._duration = duration
 
     def __eq__(self, other):
         if isinstance(other, PositionCommand):
-            return self.payload == other.payload
+            return self._mode == other._mode \
+                and self._position == other._position \
+                and self._duration == other._duration
         return False
 
     def run(self):
