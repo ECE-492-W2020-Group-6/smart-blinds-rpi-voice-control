@@ -18,7 +18,7 @@ class VoiceParser():
     TEXT2D = Text2Digits()
     DECIMAL_PATTERN = re.compile(r"(?:(\d+)\s*point\s*(\d+))")
     NEGATIVE_PATTERN = re.compile(r"(?:(?:minus|negative)\s*(\d+(?:\.\d+)?))")
-    PERCENT_PATTERN = re.compile(r"(?:(-?\d+(?:\.\d+)?)\s*percent)")
+    PERCENT_PATTERN = re.compile(r"(?:(-?\d+(?:\.\d+)?)\s*per\s*cent)")
     DURATION_PATTERN_MINUTES = re.compile(r"(?:(\d+)\s*minutes?)")
     DURATION_PATTERN_HOURS = re.compile(r"(?:(\d+)\s*hours?)")
     STEMMER = PorterStemmer()
