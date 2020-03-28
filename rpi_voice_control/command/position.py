@@ -20,12 +20,13 @@ class PositionCommand(Command):
         position {float} - position to set blinds to
         duration {duration} - how long to set blinds to position for in minutes
         port {int} - port of Smartblinds RPI server
+        kwargs {dict} - other optional parameters to pass to superclass
     """
-    def __init__(self, position, duration, port=5000):
+    def __init__(self, position, duration, **kwargs):
+        super().__init__(**kwargs)
         self._mode = 4 # Manual
         self._position = position
         self._duration = duration
-        self._port = port
 
     """ Check if two PositionCommand objects are equal
 
@@ -35,10 +36,10 @@ class PositionCommand(Command):
     """
     def __eq__(self, other):
         if isinstance(other, PositionCommand):
-            return self._mode == other._mode \
+            return super().__eq__(other) \
+                and self._mode == other._mode \
                 and self._position == other._position \
-                and self._duration == other._duration \
-                and self._port == other._port
+                and self._duration == other._duration
         return False
 
     """ Return string representation of object
@@ -51,9 +52,6 @@ class PositionCommand(Command):
             self._mode, self._position, self._duration)
 
     """ Run command encoded in this object
-
-    TODO:
-    This makes an API call to the Smartblinds RPI Web Server over localhost
     """
     def run(self):
         try:
@@ -67,15 +65,20 @@ class PositionCommand(Command):
 
     """ Builder method to build instance of class from parsed voice command (as text)
 
+    Arguments:
+        cls {PositionCommand} - class object
+        text {str} - text representing voice command
+        kwargs {dict} - other optional parameters to pass to superclass
+
     Returns:
         an instance of PositionCommand or None
     """
     @classmethod
-    def build(cls, text):
+    def build(cls, text, **kwargs):
         match = cls.PATTERN.fullmatch(text)
         if match:
             position = float(match.group(1))
             duration = int(match.group(2)) * 60 \
                 if match.group(3) == "h" else int(match.group(2))
-            return PositionCommand(position, duration)
+            return PositionCommand(position, duration, **kwargs)
         return None

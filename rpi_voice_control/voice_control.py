@@ -16,6 +16,7 @@ from halo import Halo
 from rpi_voice_control.audio.audio import VADAudio
 from rpi_voice_control.voice_parser import VoiceParser
 from rpi_voice_control.command.command_factory import CommandFactory
+from rpi_voice_control.constants import *
 
 logging.basicConfig(level=20)
 
@@ -63,7 +64,7 @@ def main(ARGS):
                 wav_data = bytearray()
             text = model.finishStream(stream_context).strip()
             parsed_text = VoiceParser.parse(text) 
-            command = CommandFactory.build(parsed_text)
+            command = CommandFactory.build(parsed_text, ip=ARGS.ip, port=ARGS.port)
             print("-" * 80)
             print(f"Recognized: {text}")
             print(f"Parsed: {parsed_text}")
@@ -74,16 +75,6 @@ def main(ARGS):
             stream_context = model.createStream()
 
 if __name__ == '__main__':
-    BEAM_WIDTH = 500
-    DEFAULT_SAMPLE_RATE = 44100
-    LM_ALPHA = 0.75
-    LM_BETA = 1.85
-
-    dir_path = os.path.dirname(os.path.realpath(__file__))
-    DEFAULT_MODEL_PATH = os.path.join(dir_path, "../models/output_graph.tflite")
-    DEFAULT_LM_PATH = os.path.join(dir_path, "../models/lm.binary")
-    DEFAULT_TRIE_PATH = os.path.join(dir_path, "../models/trie")
-
     import argparse
     parser = argparse.ArgumentParser(description="Stream from microphone to DeepSpeech using VAD")
 
@@ -111,6 +102,10 @@ if __name__ == '__main__':
                         help=f"The beta hyperparameter of the CTC decoder. Word insertion bonus. Default: {LM_BETA}")
     parser.add_argument('-bw', '--beam_width', type=int, default=BEAM_WIDTH,
                         help=f"Beam width used in the CTC decoder when building candidate transcriptions. Default: {BEAM_WIDTH}")
+    parser.add_argument('-p', '--port', type=int, default=DEFAULT_RPI_SERVER_PORT,
+                        help=f"Port of RPI server. Default: {DEFAULT_RPI_SERVER_PORT}")
+    parser.add_argument('-i', '--ip', type=str, default=DEFAULT_RPI_SERVER_IP,
+                        help=f"IP address of RPI server. Default: {DEFAULT_RPI_SERVER_IP}")
 
     ARGS = parser.parse_args()
     if ARGS.savewav: os.makedirs(ARGS.savewav, exist_ok=True)

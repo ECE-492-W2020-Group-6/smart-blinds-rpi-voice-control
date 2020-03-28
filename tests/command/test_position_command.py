@@ -6,6 +6,7 @@ Contents: Contains tests for position command
 
 import pytest
 from rpi_voice_control.command.position import PositionCommand
+from rpi_voice_control.constants import DEFAULT_RPI_SERVER_IP, DEFAULT_RPI_SERVER_PORT
 
 """ Tests for invalid input
 """
@@ -21,13 +22,22 @@ def test_position_command_builder_invalid_text(input_text):
     command = PositionCommand.build(input_text)
     assert command is None
 
-""" Tests for valid input
+""" Tests for valid input with default ip/port
 """
 @pytest.mark.parametrize("input_text,expected", [
     ("move blind 12.197% 10m", PositionCommand(12.197, 10)),
-    ("move blind -91.129% 12h", PositionCommand(-91.129, 12 * 60))
 ])
-def test_position_command_builder(input_text, expected):
+def test_position_command_builder_defaults(input_text, expected):
     command = PositionCommand.build(input_text) 
+    assert isinstance(command, PositionCommand)
+    assert command == expected
+
+""" Tests for valid input with specified ip/port
+"""
+@pytest.mark.parametrize("input_text,ip,port,expected", [
+    ("move blind -91.129% 12h", "192.167.1.254", 9112, PositionCommand(-91.129, 12 * 60, ip="192.167.1.254", port=9112))
+])
+def test_position_command_builder(input_text, ip, port, expected):
+    command = PositionCommand.build(input_text, ip=ip, port=port) 
     assert isinstance(command, PositionCommand)
     assert command == expected

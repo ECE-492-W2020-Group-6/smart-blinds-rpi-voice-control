@@ -13,11 +13,15 @@ class CommandFactory():
     """ Factory method to instantiate instances of subclass of Command
         based on input text
 
+    Arguments:
+        text {str} - text representation of voice command
+        kwargs {dict} - other optional parameters to pass to superclass
+
     Returns:
         an instance of a subclass of Command or None
     """
     @staticmethod
-    def build(text):
+    def build(text, **kwargs):
         # Register subclass
         # Have to do this explicitly since Python only registers
         # subclasses upon import
@@ -26,7 +30,7 @@ class CommandFactory():
         # See if a valid command subclass can be created from the text
         # and return that subclass instance 
         for subclass in Command.__subclasses__():
-            command = subclass.build(text) 
+            command = subclass.build(text, **kwargs) 
             if command is not None:
                 return command
 
