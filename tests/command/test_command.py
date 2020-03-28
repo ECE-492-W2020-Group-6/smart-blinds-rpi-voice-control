@@ -14,7 +14,7 @@ def test_command_factory_invalid_input(input_text):
     ("move blind 15.15% 90m", PositionCommand(15.15, 90)),
     ("move blind -18.4531% 16h", PositionCommand(-18.4531, 16 * 60)),
 ])
-def test_command_factory_invalid_input(input_text, expected):
+def test_command_factory(input_text, expected):
     command = CommandFactory.build(input_text)
     assert isinstance(command, expected.__class__)
     assert command == expected

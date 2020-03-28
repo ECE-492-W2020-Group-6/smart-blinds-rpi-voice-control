@@ -17,7 +17,7 @@ def test_position_command_builder_invalid_text(input_text):
     ("move blind 12.197% 10m", PositionCommand(12.197, 10)),
     ("move blind -91.129% 12h", PositionCommand(-91.129, 12 * 60))
 ])
-def test_position_command_builder_invalid_text(input_text, expected):
+def test_position_command_builder(input_text, expected):
     command = PositionCommand.build(input_text) 
     assert isinstance(command, PositionCommand)
     assert command == expected
