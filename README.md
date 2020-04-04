@@ -29,6 +29,10 @@ To run the voice control script:
 
 `./docker-build.sh`
 
+#### Run Unit Tests
+
+`./docker-run-tests.sh`
+
 #### Run Voice Control Script
 
 Note: this doesn't work properly since docker container doesn't recognize microphone
