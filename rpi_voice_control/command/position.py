@@ -24,7 +24,7 @@ class PositionCommand(Command):
     """
     def __init__(self, position, duration, **kwargs):
         super().__init__(**kwargs)
-        self._mode = 4 # Manual
+        self._mode = "MANUAL"
         self._position = position
         self._duration = duration
 
@@ -55,11 +55,19 @@ class PositionCommand(Command):
     """
     def run(self):
         try:
-            requests.post(f"http://localhost:{self._port}/api/v1/command", data={
+            url = f"http://{self._ip}:{self._port}/api/v1/command"
+            data = {
                 "mode": self._mode,
                 "position": self._position,
                 "duration": self._duration,
-            })
+            }
+            headers = {"Content-Type": "application/json"}
+
+            response = requests.post(url, json=data, headers=headers)
+            if response.status_code == requests.codes["ACCEPTED"]:
+                logging.info(f"POST to {url} succeeded")
+            else:
+                logging.error(f"POST to {url} failed!\n Sent: data={data}, headers={headers}\nResponse: {response.text}")
         except Exception as e:
             logging.exception("Unable to send position command to server")
 
